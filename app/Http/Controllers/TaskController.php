@@ -7,8 +7,33 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     
-    public function index(){
-        $tasks=Task::all();
+    public function index(Request $request){
+
+        $search = $request->input('search');
+        $status=$request->input('status');
+       
+      //  $tasks=Task::latest()->paginate(10);
+
+        $tasks = Task::when($search, function ($query) use ($search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                  ->orWhere('description', 'LIKE', "%{$search}%")
+                  ->orWhere('status','LIKE',"%{$search}%");
+            });
+                       
+                         
+        })
+        ->when($status ,function($query) use ($status){
+            return $query->where('status','=',$status);
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(5);
+        if ($request->ajax()) {
+            // Return only the partial view for the table rows
+            return view('partials.task-table', compact('tasks'));
+        }
+      
+
        // dd($tasks);
         return view('task.index',compact('tasks'));
     }
