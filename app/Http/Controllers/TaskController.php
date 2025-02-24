@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Mail;
 
 class TaskController extends Controller
 {
@@ -85,6 +87,21 @@ class TaskController extends Controller
         'title'=>'required',
         'description'=>'required'
     ]);
+   // dd($id);
+    $task=Task::find($id);
+    $user_id=$task->user_id;
+    $user=User::find($user_id);
+    $email=$user->email;
+   // dd($email);
+   // dd($task->user_id);
+
+    if($request->status=='completed'){
+       // dd('completed');
+        Mail::send('Email.task-tamplate',['user'=>$user,'task'=>$task],function($message) use ($email){
+            $message->to($email);
+            $message->subject('Task Completed Successfully');
+        });
+    }
     
     $task=Task::where('id',$id)->update([
         'title'=>$request->title,
