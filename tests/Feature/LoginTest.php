@@ -24,7 +24,7 @@ class LoginTest extends TestCase
 
         // Assert the user is authenticated and redirected
         $this->assertAuthenticated();
-        $response->assertRedirect('/home'); // Change based on your app's redirection
+        $response->assertRedirect('/home'); 
     }
 
     /** @test */
@@ -50,6 +50,10 @@ class LoginTest extends TestCase
     /** @test */
     public function test_user_cannot_login_with_non_existing_email()
     {
+        $user = User::factory()->create([
+            'email' => 'test@example.com',
+            'password' => bcrypt('password1234'),
+        ]);
         $response = $this->post('/login', [
             'email' => 'nonexistent@example.com',
             'password' => 'password123',
