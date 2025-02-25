@@ -15,9 +15,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{route('task.show',$task->id)}}" class="btn btn-secondary">Show</a>
-                                        <a href="{{route('task.edit',$task->id)}}" class="btn btn-primary">Edit</a>
-                                        <a href="{{route('task.delete',$task->id)}}"class="btn btn-danger">Delete</a>
+                                        <a href="{{route('task.show',$task->id)}}" class="btn btn-secondary"><i class="bx bx-show" title="Show"></i> </a>
+                                        <a href="{{route('task.edit',$task->id)}}" class="btn btn-primary"><i class="bx bx-edit-alt" title="Edit"></i></a>
+                                        <a href="{{route('task.delete',$task->id)}}"class="btn btn-danger"><i class="bx bx-trash" title="Delete"></i> </a>
 
                                     </td>
                                 </tr>

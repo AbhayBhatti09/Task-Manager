@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware(['auth'])->group(function () {
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //task
@@ -33,3 +35,4 @@ Route::get('Task/edit/{id}',[TaskController::class,'edit'])->name('task.edit');
 Route::post('Task/Update/{id}',[TaskController::class,'update'])->name('task.update');
 Route::get('Task/delete/{id}',[TaskController::class,'delete'])->name('task.delete');
 
+});
